@@ -35,12 +35,3 @@ define( 'WECLU_BTREE_KEY_BLOCK_SIZE', 32 );         //索引键值块大小
 define( 'WECLU_BTREE_POS_BLOCK_SIZE', 8 );
 define( 'WECLU_BTREE_ASSIST_BLOCK_SIZE', 1024 );
 define( 'WECLU_BTREE_MAX_KEY_SIZE', WECLU_BTREE_KEY_BLOCK_SIZE + WECLU_BTREE_POS_BLOCK_SIZE + 6 );
-/*
-'s_id'  => 0,       //起始ID
-'n_id'  => 0,       //最新ID
-'lock'  => 0,       //是否上锁
-'type'  => $type,   //类型
-'val_nums' => 0,    //有效数据数
-'inval_min' => 0,   //无效数据最小ID
-'inval_max' => 0    //无效数据最大ID
- */
