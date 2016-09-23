@@ -16,8 +16,10 @@ class Pager {
     private $table		= null;
     private $type		= null;
 	public function __construct( $space ) {
-		$this->storageObj = new Storage( $space );
-		$this->space = $space;
+	    if ( ! empty( $space ) ) {
+	        $this->storageObj = new Storage( $space );
+	        $this->space = $space;
+	    }
 	}
 	
 	public function change_space( $space ) {
@@ -29,7 +31,29 @@ class Pager {
 	    $this->type  = null;
 	}
 	
+	public function delete_db( $space ) {
+	    //删除数据文件
+	    $storageObj = new Storage( $space );
+	    if ( $storageObj -> delete_space() ) {
+	        //删除索引文件
+	        $indexObj = new HashIndex( $space );
+	        return $indexObj -> delete_space();
+	    }
+	    return false;
+	}
+	
+	public function delete_table( $table ) {
+	    //删除数据文件
+	    if ( $this->storageObj->delete_table( $table ) ) {
+	        //删除索引文件
+	        $indexObj = new BtreeIndex( $this->space );
+	        return $indexObj->delete_table( $table );
+	    }
+	    return false;
+	}
+	
 	private function select_table( $table ) {
+	    if ( empty( $this->space ) ) throw new Exception( " no database selected!" );
 		if ( $table != $this->table ) {
 			//选择表
 			$this->storageObj->select_table( $table );
@@ -84,7 +108,7 @@ class Pager {
 	        $table_paths = glob( $path . '*' );
 	        if ( ! empty( $table_paths ) ) {
 	            foreach ( $table_paths as &$table_path ) {
-	                $table = strstr( basename( $table_path ), '_', true );
+	                $table = strstr( basename( $table_path ), '@', true );
 	                $tables[$table] = 1;
 	            }
 	            $tables = array_keys( $tables );

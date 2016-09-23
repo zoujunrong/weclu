@@ -21,6 +21,18 @@ class WECLU {
 	    $this->pager->change_space( $db );
 	}
 	
+	public function show_databases() {
+	    return $this->pager->show_databases();
+	}
+	
+	/**
+	 * 删除数据库
+	 * @param string $db
+	 */
+	public function delete_db( $db ) {
+	    return $this->pager->delete_db( $db );
+	}
+	
 	/**
 	 * 创建数据表
 	 * @param string $table
@@ -32,14 +44,17 @@ class WECLU {
 	    return $this->pager->create( $table, $engine, $start_id );
 	}
 	
-	public function show_databases() {
-	    return $this->pager->show_databases();
-	}
-	
 	public function show_tables() {
 	    return $this->pager->show_tables();
 	}
 	
+	/**
+	 * 删除数据表
+	 * @param string $table
+	 */
+	public function delete_table( $table ) {
+	    return $this->pager->delete_table( $table );
+	}
 	
 	/****************************************************************************************************
 	 * HASH引擎

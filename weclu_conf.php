@@ -11,7 +11,7 @@ define( 'WECLU_DATATYPE_SIZE', 1 ) ;	//数据类型占用空间长度
 define( 'WECLU_DATABASE_TYPE', 0.1 ) ;
 define( 'WECLU_HEADER_BLOCK_SIZE', 1024 ) ;     //存放主表头部信息空间字节数
 
-//NOSQL存储引擎
+//HASH存储引擎
 define( 'WECLU_BLOCK_SIZE', 100 ) ;		//数据块大小
 define( 'WECLU_KEY_SIZE', 50 ) ;		//数据键字符最大长度
 define( 'WECLU_HEAD_BLOCK_SIZE', 12 ) ;		//数据键字符最大长度 最大支持100G 单文件大小

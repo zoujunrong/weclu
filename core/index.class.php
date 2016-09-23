@@ -19,6 +19,11 @@ class HashIndex {
 	    $this -> close();
 	}
 	
+	public function delete_space() {
+	    $this -> close();
+	    return weclu_deldir( $this -> index_path );
+	}
+	
 	/**
 	 * 设置hash索引句柄
 	 */
@@ -432,6 +437,11 @@ class BtreeIndex {
         }
     }
     
+    public function delete_table( $table ) {
+        $table_path = WECLU_BASE_PATH . 'index/' . $this -> space . '/' . $table . '/';
+        return weclu_deldir( $table_path );
+    }
+    
     /**
      * 切换表
      * @param unknown $table
@@ -809,7 +819,7 @@ class BtreeIndex {
 	    	if ( $i == 0 ) {
 	    		//如果node中有两个以上的关键字 则数据一分为2
 	    		$count = count( $node );
-	    		$node_right = array_splice( $node, ceil( $count/2 ) );
+	    		$node_right = weclu_array_slice( $node, ceil( $count/2 ) );
 	    		//更新左节点
 	    		$leftAddr = $addr;
 	    		$jsonLeft = json_encode( $node );
@@ -845,7 +855,7 @@ class BtreeIndex {
 	    					//移出数据 floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) )
 	    					$outNums = floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) );
 	    					$leftNode = json_decode( substr( $left_node_str, 1 ), true );
-	    					$currentNode = array_splice( $node, $outNums );
+	    					$currentNode = weclu_array_slice( $node, $outNums );
 	    					$leftNode = array_merge( $leftNode, $node );
 	    					//保存左节点
 	    					fseek( $this->handle[$this->keyindex], $leftNodeAddr );
@@ -873,7 +883,7 @@ class BtreeIndex {
 	    					//数据右端移出数据 floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) )
 	    					$outNums = floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) );
 	    					$rightNode = json_decode( substr( $right_node_str, 1 ), true );
-	    					$outNode = array_splice( $node, $outNums * 3 );
+	    					$outNode = weclu_array_slice( $node, $outNums * 3 );
 	    					$rightNode = array_merge( $outNode, $rightNode );
 	    					//保存右节点
 	    					fseek( $this->handle[$this->keyindex], $rightNodeAddr );
@@ -893,7 +903,7 @@ class BtreeIndex {
 	    		}
 	    		//如果左右节点都已经丰满，就要进行数据分裂, 一分为二时，右节点位置不用变， 左节点新增
 	    		$count = count( $node );
-	    		$node_right = array_splice( $node, ceil( $count/2 ) );
+	    		$node_right = weclu_array_slice( $node, ceil( $count/2 ) );
 	    		//新增左节点存储
 	    		fseek( $this->handle[$this->keyindex], 0, SEEK_END );
 	    		$leftAddr = ftell( $this->handle[$this->keyindex] );
@@ -959,7 +969,7 @@ class BtreeIndex {
 	        if ( $i == 0 ) {
 	            //如果node中有两个以上的关键字 则数据一分为2
 	            $count = count( $node );
-	            $node_right = array_splice( $node, ceil( $count/2 ) );
+	            $node_right = weclu_array_slice( $node, ceil( $count/2 ) );
 	            //更新左节点
 	            $leftAddr = $addr;
 	            $jsonLeft = json_encode( $node );
@@ -985,7 +995,7 @@ class BtreeIndex {
 	        } else {
 	            //不用判断兄弟节点是否丰满， 直接分裂， 向右增长
 	            $count = count( $node );
-	    		$node_right = array_splice( $node, ceil( $count/2 ) );
+	    		$node_right = weclu_array_slice( $node, ceil( $count/2 ) );
 	    		//更新左节点
 	    		$leftAddr = $addr;
 	    		$jsonLeft = json_encode( $node );
@@ -1064,7 +1074,7 @@ class BtreeIndex {
 	    			if ( strlen( $left_node_str ) >= ( WECLU_BTREE_BLOCK_SIZE * 3 ) / 4 ) {
 	    				$outNums = ceil( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) );
 	    	            $leftNode = json_decode( substr( $left_node_str, 1 ), true );
-	    	            $outNode = array_splice( $leftNode, $outNums * 3 );
+	    	            $outNode = weclu_array_slice( $leftNode, $outNums * 3 );
 	    	            $this->node[$i] = array_merge( $outNode, $this->node[$i] );
 	    	            //保存左节点
 	    	            fseek( $this->handle[$this->keyindex], $leftNodeAddr );
@@ -1100,7 +1110,7 @@ class BtreeIndex {
 	    	            //数据右端移出数据 floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) )
 	    	            $outNums = floor( WECLU_BTREE_BLOCK_SIZE / ( WECLU_BTREE_MAX_KEY_SIZE * 4 ) );
 	    	            $rightNode = json_decode( substr( $right_node_str, 1 ), true );
-	    	            $newRightNode = array_splice( $rightNode, $outNums );
+	    	            $newRightNode = weclu_array_slice( $rightNode, $outNums );
 	    	            $this->node[$i] = array_merge( $this->node[$i], $rightNode );
 	    	            //保存右节点
 	    	            fseek( $this->handle[$this->keyindex], $rightNodeAddr );

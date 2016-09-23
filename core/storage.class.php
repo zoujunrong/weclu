@@ -28,14 +28,33 @@ class Storage {
 	    $this -> close();
 	}
 	
+	public function delete_space() {
+	    //关闭文件句柄
+	    $this -> close();
+	    return weclu_deldir( $this -> base_path );
+	}
+	
+	public function delete_table( $table ) {
+	    $table_paths = glob( $this -> base_path . $table.'@*' );
+	    if ( ! empty( $table_paths ) ) {
+	        foreach ( $table_paths as $path ) {
+	            if ( is_file( $path ) ) unlink( $path );
+	        }
+	        return true;
+	    }
+	    return false;
+	}
+	
 	public function create_table( $table, $table_type = 'RDS', $start_id=1 ) {
-	    $main_path = $this->base_path . $table . '_main.data';
+	    $main_path = $this->base_path . $table . '@main.data';
 	    if ( ! is_file( $main_path ) ) {
 	    	$this -> table = $table;
 	    	$this -> close();   //关闭之前的数据句柄
 	    	$this -> main_handle = fopen( $main_path, 'w+' );
 	    	$this -> init_main_header( $table_type, $start_id );     //初始化头部信息
+	    	return true;
 	    }
+	    return false;
 	}
 	
 	public function select_table( $table ) {
@@ -57,7 +76,7 @@ class Storage {
 	 * 设置位图句柄
 	 */
 	public function set_byte_handle() {
-		$byte_path = $this->base_path . $this->table . '_byte.map';
+		$byte_path = $this->base_path . $this->table . '@byte.map';
 		//关闭当前数据句柄
 		if ( ! empty( $this -> byte_handle ) ) return true;
 		if ( is_file( $byte_path ) ) {
@@ -72,7 +91,7 @@ class Storage {
 	 * 设置主表句柄
 	 */
 	public function set_main_handle() {
-		$main_path = $this->base_path . $this->table . '_main.data';
+		$main_path = $this->base_path . $this->table . '@main.data';
 		//关闭当前数据句柄
 		if ( ! empty( $this -> main_handle ) ) return true;
 		if ( is_file( $main_path ) ) {
@@ -92,7 +111,7 @@ class Storage {
 	        //关闭当前数据句柄
 	        if ( ! empty( $this->data_handle ) ) fclose( $this->data_handle );
 	        //开启新区域数据句柄
-	        $data_path = $this->base_path . $this->table . '_' . $area . '.data';
+	        $data_path = $this->base_path . $this->table . '@' . $area . '.data';
 	        if ( is_file( $data_path ) ) {
 	            $this->data_handle = fopen( $data_path, 'r+' );
 	        } else {
@@ -108,7 +127,7 @@ class Storage {
 	public function init_main_header( $table_type, $start_id=1 ) {
 	    $this->main_header = array(
 	        's_id'  => $start_id,       //起始ID
-            'n_id'  => 0,       //最新ID
+            'n_id'  => $start_id > 0 ? ($start_id-1) : 0,       //最新ID
             'type'  => $table_type,   //类型
 	    );
 	    $this -> set_main_header();

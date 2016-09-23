@@ -54,3 +54,38 @@ function weclu_filter_filed( $filed ) {
 	return $retFiled;
 }
 
+function weclu_array_slice( &$arr, $offset ) {
+	$ret = array();
+	if ( ! empty( $arr ) ) {
+		$i = 0;
+		$count = count( $arr );
+		foreach ( $arr as $k => $v ) {
+			if ( $i >= $offset ) {
+				$ret[$k] = $v;
+				unset( $arr[$k] );
+			}
+			$i++;
+		}
+	}
+	return $ret;
+}
+
+function weclu_deldir( $dir ) {
+    $dh = opendir( $dir );
+    while ( $file = readdir( $dh ) ) {
+        if( $file != "." && $file != ".." ) {
+            $fullpath = $dir . "/" . $file;
+            if( ! is_dir( $fullpath ) ) {
+                unlink( $fullpath );
+            } else {
+                weclu_deldir( $fullpath );
+            }
+        }
+    }
+    closedir( $dh );
+    if( rmdir( $dir ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
