@@ -1,4 +1,4 @@
-<?php// test asdfasdfdefine( 'WECLU_SYSTEM_PATH', dirname(__FILE__) ) ;	//数据库系统路径
+<?phpdefine( 'WECLU_SYSTEM_PATH', dirname(__FILE__) ) ;	//数据库系统路径
 define( 'WECLU_BASE_PATH', WECLU_SYSTEM_PATH . '/db/' );	//数据库数据路径
 define( 'WECLU_CORE_PATH', WECLU_SYSTEM_PATH . '/core/' );	//数据库核心程序路径
 define( 'WECLU_INDEX_LEVEL', 4 ) ;			//索引级别
