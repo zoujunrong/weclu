@@ -1,5 +1,5 @@
 <?php
-
+// hahaha
 define( 'WECLU_SYSTEM_PATH', dirname(__FILE__) ) ;
 
 //数据库系统路径
