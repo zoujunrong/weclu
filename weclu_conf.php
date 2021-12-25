@@ -26,4 +26,58 @@ define( 'WECLU_DATA_COLLECT_PERCENT', 0.1 ) ;
 //数据回收时有效数据百分比
 define( 'WECLU_DATATYPE_SIZE', 1 ) ;
 
-//数据类型占用空间长度define( 'WECLU_DATABASE_TYPE', 0.1 ) ;define( 'WECLU_HEADER_BLOCK_SIZE', 1024 ) ;     //存放主表头部信息空间字节数//HASH存储引擎define( 'WECLU_BLOCK_SIZE', 100 ) ;     //数据块大小define( 'WECLU_KEY_SIZE', 50 ) ;        //数据键字符最大长度define( 'WECLU_HEAD_BLOCK_SIZE', 12 ) ;     //数据键字符最大长度 最大支持100G 单文件大小//RDS存储引擎define( 'WECLU_RDS_BLOCK_SIZE', 100 ) ;     //数据RDS块大小define( 'WECLU_RDS_ID_LENGTH', 9 ) ;    // 最大支持15位整数define( 'WECLU_RDS_MAP_ADDR', 8 ) ;    //数据分表长度， 支持数据分表数 define( 'WECLU_RDS_DATA_BLOCKS', 5 ) ;    //一条数据占用最大数据块 60466175//hash define( 'WECLU_HASH_BLOCK_SIZE', 1024 );    //hash主表块的长度， 此处最好是1024的整数倍define( 'WECLU_HASH_HEAD_BLOCK_SIZE', 8 );    //hash主表块的块头长度 8字节define( 'WECLU_HASH_ASSIST_BLOCK_SIZE', WECLU_HASH_BLOCK_SIZE * 1 ); //hash辅助数据块的长度define( 'WECLU_HASH_BLOCK_RULES', base_convert( 'fffff', 16, 10 ) * WECLU_HASH_BLOCK_SIZE );    //hash主空间分割位置//btreedefine( 'WECLU_BTREE_HEADER_BLOCK_SIZE', 1024 );    //索引头部信息define( 'WECLU_BTREE_BLOCK_SIZE', 1024 );           //索引块信息define( 'WECLU_BTREE_KEY_BLOCK_SIZE', 32 );         //索引键值块大小define( 'WECLU_BTREE_POS_BLOCK_SIZE', 8 );define( 'WECLU_BTREE_ASSIST_BLOCK_SIZE', 1024 );define( 'WECLU_BTREE_MAX_KEY_SIZE', WECLU_BTREE_KEY_BLOCK_SIZE + WECLU_BTREE_POS_BLOCK_SIZE + 6 );
+//数据类型占用空间长度
+define( 'WECLU_DATABASE_TYPE', 0.1 ) ;
+define( 'WECLU_HEADER_BLOCK_SIZE', 1024 ) ;
+
+//存放主表头部信息空间字节数
+//HASH存储引擎
+define( 'WECLU_BLOCK_SIZE', 100 ) ;
+
+//数据块大小
+define( 'WECLU_KEY_SIZE', 50 ) ;
+
+//数据键字符最大长度
+define( 'WECLU_HEAD_BLOCK_SIZE', 12 ) ;
+
+//数据键字符最大长度 最大支持100G 单文件大小
+
+//RDS存储引擎
+define( 'WECLU_RDS_BLOCK_SIZE', 100 ) ;
+
+//数据RDS块大小
+define( 'WECLU_RDS_ID_LENGTH', 9 ) ;
+
+// 最大支持15位整数
+define( 'WECLU_RDS_MAP_ADDR', 8 ) ;
+
+//数据分表长度， 支持数据分表数 
+define( 'WECLU_RDS_DATA_BLOCKS', 5 ) ;
+
+//一条数据占用最大数据块 60466175
+//hash 
+define( 'WECLU_HASH_BLOCK_SIZE', 1024 );
+
+//hash主表块的长度， 此处最好是1024的整数倍
+define( 'WECLU_HASH_HEAD_BLOCK_SIZE', 8 );
+
+//hash主表块的块头长度 8字节
+define( 'WECLU_HASH_ASSIST_BLOCK_SIZE', WECLU_HASH_BLOCK_SIZE * 1 );
+ 
+//hash辅助数据块的长度
+define( 'WECLU_HASH_BLOCK_RULES', base_convert( 'fffff', 16, 10 ) * WECLU_HASH_BLOCK_SIZE );
+
+//hash主空间分割位置
+//btree
+define( 'WECLU_BTREE_HEADER_BLOCK_SIZE', 1024 );
+
+//索引头部信息
+define( 'WECLU_BTREE_BLOCK_SIZE', 1024 );
+
+//索引块信息
+define( 'WECLU_BTREE_KEY_BLOCK_SIZE', 32 );
+
+//索引键值块大小
+define( 'WECLU_BTREE_POS_BLOCK_SIZE', 8 );
+define( 'WECLU_BTREE_ASSIST_BLOCK_SIZE', 1024 );
+define( 'WECLU_BTREE_MAX_KEY_SIZE', WECLU_BTREE_KEY_BLOCK_SIZE + WECLU_BTREE_POS_BLOCK_SIZE + 6 );
